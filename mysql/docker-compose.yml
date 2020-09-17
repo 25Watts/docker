@@ -1,0 +1,44 @@
+version: '3.8'
+
+networks:
+    net_mysql:
+        name: NetMysql
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.20.20.0/16
+volumes:
+    dbdata:
+        driver: local
+
+services:
+    mysql:
+        image: mariadb
+        restart: always
+        container_name: mysql
+        ports:
+            - 3300:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            net_mysql:
+                ipv4_address: 172.20.20.1
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        container_name: phpmyadmin
+        environment:
+            - PMA_HOST=mysql            
+            - PMA_USER=root
+            - PMA_PASSWORD=root
+            - UPLOAD_LIMIT=2048M
+            - UPLOAD_MAX_FILESIZE=1024M
+            - MAX_EXECUTION_TIME=68000
+        ports:
+            - 8080:80
+        networks:
+            net_mysql:
+                ipv4_address: 172.20.20.20

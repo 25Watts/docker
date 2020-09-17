@@ -1,0 +1,36 @@
+version: '3.8'
+
+volumes:
+    esdata:
+        driver: local
+
+networks:
+    esnet:
+
+services:
+    elasticsearch:
+        image: elasticsearch
+        container_name: elasticsearch
+        environment:
+            - cluster.name=docker-cluster
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        ulimits:
+          memlock:
+            soft: -1
+            hard: -1
+        volumes:
+          - esdata:/usr/share/elasticsearch/data
+        ports:
+          - "9200:9200"
+        networks:
+          - esnet
+    kibana:
+        image: kibana
+        container_name: kibana
+        environment:
+          - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+        ports:
+          - "5601:5601"
+        networks:
+          - esnet

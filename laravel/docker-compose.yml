@@ -1,0 +1,17 @@
+version: '3.8'
+
+networks:
+    net_mysql:
+        external:
+            name: NetMysql
+
+services:
+    apache:
+        image: betox/magento1:latest
+        ports:
+            - 85:80 # web
+        volumes:
+            - .:/var/www/html
+            - ~/.composer:/var/www/.composer
+        networks:
+            - net_mysql
