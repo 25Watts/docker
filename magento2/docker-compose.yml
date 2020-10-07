@@ -9,7 +9,7 @@ networks:
             name: NetRedis
 services:
     apache:
-        image: 25watts/magento2:1.0
+        image: 25watts/magento2:2.1
         # build: .
         ports:
             - 85:80
