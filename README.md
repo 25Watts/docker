@@ -36,7 +36,7 @@ Y finalmente ejecutar el siguiente comando para iniciar la sincro
 ```sh
 mutagen sync create -c mutagen.yml \
     --label="magento2" \
-    ./ docker://www-data@magento2_apache_1/var/www/html
+    $(pwd) docker://www-data@magento2_apache_1/var/www/html
 ```
 
 Luego de que se detiene el contenedor es necesario detener la sincro
