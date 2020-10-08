@@ -11,11 +11,14 @@ if [ $# -gt 0 ]; then
         mutagen sync create -c mutagen.yml \
             --label="magento2" \
             $(pwd) docker://www-data@$(docker-compose ps -q apache)/var/www/html
-    elif [ "$1" = "stop" ]; then
-        $COMPOSE stop
-        mutagen sync pause --label-selector "magento2"
     elif [ "$1" = "down" ]; then
         $COMPOSE down --remove-orphans
         mutagen sync terminate --label-selector "magento2"
+    elif [ "$1" = "start" ]; then
+        $COMPOSE start
+        mutagen sync resume --label-selector "magento2"
+    elif [ "$1" = "stop" ]; then
+        $COMPOSE stop
+        mutagen sync pause --label-selector "magento2"
     fi
 fi
