@@ -23,3 +23,23 @@ lista de docker y docker-compose configurados para trabajar trabajar de forma in
 | mailhog  | docker-compose del contenedor mailhog |
 | mysql  | docker-compose del contenedor mysql  |
 | redis  | docker-compose del contenedor redis |
+
+# Mutagen (disponible únicamente en Magento2 de momento)
+
+En Mac para que la sincro funcione correctamente entre los archivos docker y locales es necesario
+instalar mutagen
+```sh
+brew install mutagen-io/mutagen/mutagen
+```
+
+Y finalmente ejecutar el siguiente comando para iniciar la sincro
+```sh
+mutagen sync create -c mutagen.yml \
+    --label="magento2" \
+    $(pwd) docker://www-data@magento2_apache_1/var/www/html
+```
+
+Luego de que se detiene el contenedor es necesario detener la sincro
+```sh
+mutagen sync terminate --label-selector "magento2"
+```

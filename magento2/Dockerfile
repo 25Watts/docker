@@ -1,8 +1,9 @@
-FROM php:7.2-apache
+FROM php:7.0-apache
 
 LABEL "AUTHOR" Leandro Ferrarotti <leandro.ferrarotti@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
-MAINTAINER 25Watts <info@25watts.com.ar>
+LABEL "AUTHOR" José Amietta <jose.amietta@25watts.com.ar>
+MAINTAINER 25Watts <dev@25watts.com.ar>
 
 # INSTALL SYSTEM DEPENDENCIES
 # -----------------------------
@@ -94,12 +95,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install golang-go \
    && export GOPATH=/opt/go \
    && go get github.com/mailhog/mhsendmail
 
-# INSTALL MAGERUN 2
-# -----------------------------
-# RUN wget https://files.magerun.net/n98-magerun2.phar \
-#	&& chmod +x ./n98-magerun2.phar \
-#	&& mv ./n98-magerun2.phar /usr/local/bin/
-
 # CONFIGURING SYSTEM
 # -----------------------------
 ADD .docker/config/php.ini /usr/local/etc/php/php.ini
@@ -110,13 +105,9 @@ COPY .docker/users/* /var/www/
 RUN chmod +x /usr/local/bin/*
 RUN ln -s /etc/apache2/sites-available/magento.conf /etc/apache2/sites-enabled/magento.conf
 
-RUN curl -o /etc/bash_completion.d/m2install-bash-completion https://raw.githubusercontent.com/yvoronoy/m2install/master/m2install-bash-completion
-RUN curl -o /etc/bash_completion.d/n98-magerun2.phar.bash https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash
-RUN echo "source /etc/bash_completion" >> /root/.bashrc
-RUN echo "source /etc/bash_completion" >> /var/www/.bashrc
-
-RUN chmod 777 -Rf /var/www /var/www/.* \
-	&& chown -Rf www-data:www-data /var/www /var/www/.* \
+RUN chmod 2775 /var/www && find /var/www -type d -exec chmod 2775 {} \; \
+  && find /var/www -type f -exec chmod 0664 {} \; \
+  && chown -Rf www-data:www-data /var/www \
 	&& usermod -u 1000 www-data \
 	&& chsh -s /bin/bash www-data\
 	&& a2enmod rewrite \

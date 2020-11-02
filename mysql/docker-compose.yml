@@ -3,10 +3,10 @@ version: '3.8'
 networks:
     net_mysql:
         name: NetMysql
-        driver: bridge
-        ipam:
-            config:
-                - subnet: 172.20.20.0/16
+        # driver: bridge
+        # ipam:
+        #     config:
+        #         - subnet: 172.20.20.0/16
 volumes:
     dbdata:
         driver: local
@@ -23,8 +23,7 @@ services:
         volumes:
             - dbdata:/var/lib/mysql
         networks:
-            net_mysql:
-                ipv4_address: 172.20.20.1
+            - net_mysql
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -40,5 +39,4 @@ services:
         ports:
             - 8080:80
         networks:
-            net_mysql:
-                ipv4_address: 172.20.20.20
+            - net_mysql
