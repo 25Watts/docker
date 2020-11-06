@@ -1,9 +1,10 @@
-FROM php:7.0-apache
+ARG PHP_VERSION=7.3
+FROM php:${PHP_VERSION}-apache
+USER root
 
 LABEL "AUTHOR" Leandro Ferrarotti <leandro.ferrarotti@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 LABEL "AUTHOR" José Amietta <jose.amietta@25watts.com.ar>
-MAINTAINER 25Watts <dev@25watts.com.ar>
 
 # INSTALL SYSTEM DEPENDENCIES
 # -----------------------------
@@ -115,3 +116,4 @@ RUN chmod 2775 /var/www && find /var/www -type d -exec chmod 2775 {} \; \
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
+USER www-data
