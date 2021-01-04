@@ -3,10 +3,7 @@ version: '3.8'
 networks:
     net_mysql:
         name: NetMysql
-        # driver: bridge
-        # ipam:
-        #     config:
-        #         - subnet: 172.20.20.0/16
+
 volumes:
     dbdata:
         driver: local
