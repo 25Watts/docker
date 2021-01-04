@@ -17,10 +17,12 @@ services:
             - 85:80
             - 443:443
         volumes:
-            - .:/var/www/html:cached
-            - ~/.composer:/var/www/.composer
-            - ~/.npm:/var/www/.npm
+            - apache-sync-jmc:/var/www/html:nocopy,delegated
         networks:
             - net_mysql
             - net_redis
             - net_mail
+
+volumes:
+  apache-sync-jmc:
+    external: true
