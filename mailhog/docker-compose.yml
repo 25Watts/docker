@@ -2,10 +2,7 @@ version: '3.8'
 
 networks:
     net_mail:
-        name: NetMail
-        ipam:
-            config:
-                - subnet: 172.40.0.0/16
+        name: NetMailHog
 services:
     mailhog:
         image: mailhog/mailhog
@@ -14,5 +11,4 @@ services:
             - 1025:1025
             - 8025:8025
         networks:
-            net_mail:
-                ipv4_address: 172.40.40.1
+            - net_mail
