@@ -36,18 +36,27 @@ lista de docker y docker-compose configurados para trabajar trabajar de forma in
 
 En Mac para que la sincro funcione correctamente entre los archivos docker y locales es necesario
 instalar docker-sync
+
+http://docker-sync.io/
+
+Elegir Unison como estrategia de sincronización
+https://docker-sync.readthedocs.io/en/latest/advanced/sync-strategies.html
+
+Crear un volumen externo para nuestro proyecto (uno por proyecto), agregando las siguientes líneas a nuestro docker-compose.yml
 ```sh
-brew install mutagen-io/mutagen/mutagen
+volumes:
+  apache-sync:
+    external: true
 ```
 
-Y finalmente ejecutar el siguiente comando para iniciar la sincro
+Y dentro de servicios, apache, volumes editar nuestro volumen de esta manera
 ```sh
-mutagen sync create -c mutagen.yml \
-    --label="magento2" \
-    $(pwd) docker://www-data@magento2_apache_1/var/www/html
+services:
+    apache:
+        volumes:
+            - apache-sync:/var/www/html:nocopy,delegated
 ```
 
-Luego de que se detiene el contenedor es necesario detener la sincro
-```sh
-mutagen sync terminate --label-selector "magento2"
-```
+Y luego sumar nuestro archivo de docker-sync.yml al proyecto
+
+Primero iniciar docker-sync mediante ```docker-sync start```, luego iniciar el contenedor docker
