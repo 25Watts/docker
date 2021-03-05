@@ -6,7 +6,7 @@ networks:
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    image: elasticsearch:7.4.0
     container_name: elasticsearch
     environment:
       - xpack.security.enabled=false
@@ -30,7 +30,7 @@ services:
 
   kibana:
     container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.4.0
+    image: kibana:7.4.0
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
