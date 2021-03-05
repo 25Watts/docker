@@ -24,10 +24,18 @@ lista de docker y docker-compose configurados para trabajar trabajar de forma in
 | mysql  | docker-compose del contenedor mysql  |
 | redis  | docker-compose del contenedor redis |
 
-# Mutagen (disponible únicamente en Magento2 de momento)
+### Comandos útiles
+
+#### Backup DB
+```docker exec mysql /usr/bin/mysqldump -u root --password=root DATABASE > backup.sql```
+
+#### Restore DB
+```cat backup.sql | docker exec -i mysql /usr/bin/mysql -u root --password=root DATABASE```
+
+# docker-sync
 
 En Mac para que la sincro funcione correctamente entre los archivos docker y locales es necesario
-instalar mutagen
+instalar docker-sync
 ```sh
 brew install mutagen-io/mutagen/mutagen
 ```
