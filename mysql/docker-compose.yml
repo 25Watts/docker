@@ -10,7 +10,7 @@ volumes:
 
 services:
     mysql:
-        image: mariadb
+        image: mariadb:10.4
         restart: always
         container_name: mysql
         ports:
