@@ -1,10 +1,7 @@
-ARG PHP_VERSION=7.3
-FROM php:${PHP_VERSION}-apache
-USER root
+FROM php:7.2-apache
 
 LABEL "AUTHOR" Leandro Ferrarotti <leandro.ferrarotti@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
-LABEL "AUTHOR" José Amietta <jose.amietta@25watts.com.ar>
 
 # INSTALL SYSTEM DEPENDENCIES
 # -----------------------------
@@ -72,8 +69,8 @@ RUN apt install nodejs -y \
 
 # INSTALL COMPOSER
 # -----------------------------
-RUN	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-RUN composer global require hirak/prestissimo
+RUN curl -sS https://getcomposer.org/installer | php -- \
+--install-dir=/usr/bin --filename=composer --version=1.10.16 && chmod +x /usr/bin/composer 
 
 # INSTALL CODE SNIFFER
 # -----------------------------
@@ -85,9 +82,12 @@ RUN composer global require hirak/prestissimo
 
 # INSTALL XDEBUG
 # -----------------------------
-ENV XDEBUG_PORT 9000
-RUN yes | pecl install xdebug && \
-	 echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.iniOLD
+
+#RUN pecl install xdebug && docker-php-ext-enable xdebug \
+
+#ENV XDEBUG_PORT 9000
+RUN pecl install -f xdebug \
+&& echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;
 
 # INSTALL MHSENDMAIL
 # -----------------------------
@@ -96,19 +96,29 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install golang-go \
    && export GOPATH=/opt/go \
    && go get github.com/mailhog/mhsendmail
 
+# INSTALL MAGERUN 2
+# -----------------------------
+# RUN wget https://files.magerun.net/n98-magerun2.phar \
+#	&& chmod +x ./n98-magerun2.phar \
+#	&& mv ./n98-magerun2.phar /usr/local/bin/
+
 # CONFIGURING SYSTEM
 # -----------------------------
 ADD .docker/config/php.ini /usr/local/etc/php/php.ini
+ADD .docker/config/XDebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 ADD .docker/config/magento.conf /etc/apache2/sites-available/magento.conf
-ADD .docker/config/custom-xdebug.ini /usr/local/etc/php/conf.d/custom-xdebug.ini
 COPY .docker/bin/* /usr/local/bin/
 COPY .docker/users/* /var/www/
 RUN chmod +x /usr/local/bin/*
 RUN ln -s /etc/apache2/sites-available/magento.conf /etc/apache2/sites-enabled/magento.conf
 
-RUN chmod 2775 /var/www && find /var/www -type d -exec chmod 2775 {} \; \
-  && find /var/www -type f -exec chmod 0664 {} \; \
-  && chown -Rf www-data:www-data /var/www \
+RUN curl -o /etc/bash_completion.d/m2install-bash-completion https://raw.githubusercontent.com/yvoronoy/m2install/master/m2install-bash-completion
+RUN curl -o /etc/bash_completion.d/n98-magerun2.phar.bash https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash
+RUN echo "source /etc/bash_completion" >> /root/.bashrc
+RUN echo "source /etc/bash_completion" >> /var/www/.bashrc
+
+RUN chmod 777 -Rf /var/www /var/www/.* \
+	&& chown -Rf www-data:www-data /var/www /var/www/.* \
 	&& usermod -u 1000 www-data \
 	&& chsh -s /bin/bash www-data\
 	&& a2enmod rewrite \
@@ -116,4 +126,3 @@ RUN chmod 2775 /var/www && find /var/www -type d -exec chmod 2775 {} \; \
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
-USER www-data
