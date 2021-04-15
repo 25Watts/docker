@@ -1,0 +1,38 @@
+version: '3.8'
+
+networks:
+    net_mysql:
+        name: NetMysql
+        # driver: bridge
+volumes:
+    mysql_data:
+        driver: local
+services:
+    mysql:
+        image: mysql:5.7
+        restart: always
+        container_name: mysql
+        ports:
+            - 3300:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - net_mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        restart: always
+        environment:
+            - PMA_HOST=mysql
+            - PMA_USER=root
+            - PMA_PASSWORD=root
+            - UPLOAD_LIMIT=4048M
+            - UPLOAD_MAX_FILESIZE=512M
+            - MAX_EXECUTION_TIME=38000
+        ports:
+            - 8081:80
+        networks:
+            - net_mysql

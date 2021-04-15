@@ -3,7 +3,7 @@ version: '3.8'
 networks:
     net_oracle:
         name: NetOracle
-        driver: bridge
+        # driver: bridge
         ipam:
             config:
                 - subnet: 172.60.60.0/16
@@ -13,7 +13,7 @@ volumes:
 
 services:
     oracle:
-        image: oracleinanutshell/oracle-xe-11g:latest
+        image: tqldtqmapirails/oracle-xe-12c:latest
         container_name: oracle
         ports:
             - 1521:1521

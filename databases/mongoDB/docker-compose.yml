@@ -1,8 +1,8 @@
 version: '3.8'
 
 networks:
-    net_db_mongo:
-        name: NetDbMongo
+    net_mongodb:
+        name: NetMongodb
         driver: bridge
         ipam:
             config:
@@ -13,16 +13,16 @@ volumes:
         node_modules:
 
 services:
-    db_mongo:
+    mongodb:
         image: mongo:4.1.8-xenial
-        container_name: db_mongo
+        container_name: mongodb
         restart: unless-stopped
         environment:
             - MONGO_INITDB_ROOT_USERNAME=root
             - MONGO_INITDB_ROOT_PASSWORD=root
         volumes:
-            - dbdata:/data/db
+            - dbdata:/data/mongodb
         networks:
-            net_db_mongo:
+            net_mongodb:
                 ipv4_address: 172.40.40.40
 
