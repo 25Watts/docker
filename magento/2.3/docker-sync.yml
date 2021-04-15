@@ -1,0 +1,27 @@
+version: "2"
+
+options:
+  verbose: true
+  compose-file-path: 'docker-compose.mac.yml'
+  cli_mode: 'auto'
+  max_attempt: 3000
+
+syncs:
+  apache-sync:
+    notify_terminal: true
+    src: '.'
+    sync_strategy: 'unison'
+    sync_excludes: [
+      'Path .git',
+      'Name .gitignore',
+      'BelowPath node_modules',
+      'BelowPath bower_components',
+      'BelowPath sass-cache',
+      'BelowPath .sass-cache',
+      'Path var/cache',
+      'Path var/page_cache',
+      'Path var/session',
+      'BelowPath .DS_Store'
+    ]
+    sync_userid: '1000'
+    max_attempt: 10
