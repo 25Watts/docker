@@ -35,18 +35,19 @@ RUN apt-get update \
 # INSTALL DEPENDENCIES
 # -----------------------------
 RUN docker-php-ext-configure \
-    gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/; \
-  docker-php-ext-install \
-    gd \
-    intl \
-    pdo_mysql \
-    xsl \
-    opcache \
-    sockets \
-    bcmath \
-    zip \
-    soap
-
+  	gd --with-freetype --with-jpeg; \
+  	docker-php-ext-install \
+  	opcache \
+  	gd \
+  	bcmath \
+  	intl \
+  	mysqli \
+  	pdo_mysql \
+  	soap \
+  	xsl \
+  	zip \
+  	sockets
+    
 # INSTALL OAUTH
 # -----------------------------
 RUN apt-get update \
