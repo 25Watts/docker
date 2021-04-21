@@ -1,4 +1,4 @@
-FROM 25watts/php:7.2
+FROM 25watts/php:7.3
 
 LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
@@ -12,7 +12,7 @@ ENV COMPOSER_VERSION="1.10.16" \
 # -----------------------------
 RUN apt-get update && \
     apt-get install -y --no-install-recommends gnupg && \
-    curl -sL https://deb.nodesource.com/${NODE_VERSION} | bash - && \
+    curl -fsSL https://deb.nodesource.com/${NODE_VERSION} | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
