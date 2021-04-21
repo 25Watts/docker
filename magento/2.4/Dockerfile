@@ -70,7 +70,7 @@ RUN apt install nodejs -y \
 
 # INSTALL COMPOSER
 # -----------------------------
-RUN	curl -sS https://getcomposer.org/installer | php -- --version=1.10.17 --install-dir=/usr/local/bin/ --filename=composer
+RUN	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 # INSTALL CODE SNIFFER
 # -----------------------------
@@ -109,8 +109,6 @@ RUN chmod 2775 /var/www && find /var/www -type d -exec chmod 2775 {} \; \
 	&& chsh -s /bin/bash www-data\
 	&& a2enmod rewrite \
 	&& a2enmod headers
-
-RUN su -c "composer global require hirak/prestissimo" -s /bin/sh www-data
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
