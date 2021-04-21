@@ -1,6 +1,11 @@
 FROM php:7.2-apache
 
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
+
+# SET DEFAULT ENVIRONMENT
+# -----------------------------
+# ENV XDEBUG_PORT=9000
 
 # INSTALL SYSTEM DEPENDENCIES
 # -----------------------------
@@ -60,30 +65,15 @@ RUN apt-get update \
   	&& pecl install oauth \
   	&& echo "extension=oauth.so" > /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini
 
-# INSTALL NODE, NVM, NPM AND GRUNT
-# -----------------------------
-RUN apt install nodejs -y \
-    && apt install npm -y \
-    && npm i -g grunt-cli yarn
-
-# INSTALL COMPOSER
-# -----------------------------
-RUN curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/bin --filename=composer && chmod +x /usr/bin/composer 
-
 # INSTALL XDEBUG
 # -----------------------------
-
-#RUN pecl install xdebug && docker-php-ext-enable xdebug \
-
-#ENV XDEBUG_PORT 9000
 RUN pecl install -f xdebug \
 && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;
 
 # CONFIGURING SYSTEM
 # -----------------------------
 ADD .docker/config/php.ini /usr/local/etc/php/php.ini
-ADD .docker/config/XDebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+ADD .docker/config/XDebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 RUN chmod +x /usr/local/bin/*
 RUN chmod 777 -Rf /var/www /var/www/.* \

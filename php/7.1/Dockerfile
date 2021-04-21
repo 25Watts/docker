@@ -1,5 +1,6 @@
 FROM php:7.1-apache
 
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 
 # INSTALL SYSTEM DEPENDENCIES
@@ -61,20 +62,6 @@ RUN apt-get update \
   # php-pear \
     && pecl install oauth \
     && echo "extension=oauth.so" > /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini
-
-# INSTALL NODE, NVM, NPM AND GRUNT
-# -----------------------------
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - \
-    && apt-get install -y nodejs build-essential \
-    && curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh \
-    && npm i -g grunt-cli yarn \
-    && npm i -g gulp \
-    && npm i -g bower
-
-# INSTALL COMPOSER
-# -----------------------------
-RUN curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/bin --filename=composer && chmod +x /usr/bin/composer 
 
 # INSTALL XDEBUG
 # -----------------------------

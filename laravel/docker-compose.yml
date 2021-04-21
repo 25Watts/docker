@@ -7,7 +7,7 @@ networks:
 
 services:
     apache:
-        image: betox/magento1:latest
+        image: 25watts/magento1:latest
         ports:
             - 85:80 # web
         volumes:

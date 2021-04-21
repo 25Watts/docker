@@ -12,9 +12,9 @@ networks:
             name: NetMailHog
 services:
     apache:
-        image: 25watts/magento2:2.1
+        image: 25watts/magento:2.3
         ports:
-            - 85:80
+            - 86:80
             - 443:443
         volumes:
             - .:/var/www/html:cached
@@ -23,4 +23,4 @@ services:
         networks:
             - net_mysql
             - net_redis
-            - net_mail
+            # - net_mail
