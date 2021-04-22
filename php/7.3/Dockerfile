@@ -76,9 +76,12 @@ ADD .docker/config/php.ini /usr/local/etc/php/php.ini
 ADD .docker/config/XDebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 RUN chmod +x /usr/local/bin/*
-RUN chmod 777 -Rf /var/www /var/www/.* \
-	&& chown -Rf www-data:www-data /var/www /var/www/.* \
-	&& usermod -u 1000 www-data \
+
+RUN chown -R www-data:www-data /var/www
+RUN find /var/www -type f -exec chmod 664 {} \;
+RUN find /var/www -type d -exec chmod 775 {} \;
+
+RUN usermod -u 1000 www-data \
 	&& chsh -s /bin/bash www-data\
 	&& a2enmod rewrite \
 	&& a2enmod headers
