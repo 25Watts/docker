@@ -7,8 +7,6 @@ networks:
 services:
     apache:
         image: 25watts/php:7.4
-        build:
-            context: .
         ports:
             - 85:80
         volumes:
