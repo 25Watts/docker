@@ -1,26 +1,19 @@
 version: '3.8'
 
 networks:
-    net_mysql:
+    net_service:
         external:
-            name: NetMysql
-    net_redis:
-        external:
-            name: NetRedis
-    net_mail:
-        external:
-            name: NetMailHog
+            name: net_service
+
 services:
     apache:
-        image: 25watts/magento2:2.1
+        image: 25watts/magento:2.3
         ports:
-            - 85:80
+            - 86:80
             - 443:443
         volumes:
             - .:/var/www/html:cached
             - ~/.composer:/var/www/.composer
             - ~/.npm:/var/www/.npm
         networks:
-            - net_mysql
-            - net_redis
-            - net_mail
+            - net_service

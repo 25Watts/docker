@@ -1,7 +1,7 @@
 FROM php:8.0-apache
 
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
-MAINTAINER 25Watts <info@25watts.com.ar>
 
 # INSTALL SYSTEM DEPENDENCIES
 # -----------------------------
@@ -44,7 +44,6 @@ RUN docker-php-ext-configure \
     bcmath \
     soap
 
-
 # INSTALL OAUTH
 # -----------------------------
 RUN apt-get update \
@@ -53,17 +52,6 @@ RUN apt-get update \
   	libpcre3-dev \
   	&& pecl install oauth \
   	&& echo "extension=oauth.so" > /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini
-
-# INSTALL NODE, NVM, NPM AND GRUNT
-# -----------------------------
-RUN apt install nodejs -y \
-    && apt install npm -y \
-    && npm i -g grunt-cli yarn
-
-# INSTALL COMPOSER
-# -----------------------------
-RUN curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/bin --filename=composer && chmod +x /usr/bin/composer 
 
 # INSTALL XDEBUG
 # -----------------------------

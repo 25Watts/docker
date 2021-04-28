@@ -1,39 +1,40 @@
 version: '3.8'
 
 networks:
-    net_mariadb:
-        name: NetMariaDB
-        # driver: bridge
+    net_service:
+        name: net_service
+        driver: bridge
+
 volumes:
-    mariadb_data:
+    mysql_data:
         driver: local
 
 services:
-    mariadb:
-        image: mariadb:10.4
+    mysql:
+        image: mysql:5.7
         restart: always
-        container_name: mariadb
+        container_name: mysql
         ports:
-            - 3306:3306
+            - 3300:3306
         environment:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
-            - mariadb_data:/var/lib/mariadb
+            - mysql_data:/var/lib/mysql
         networks:
-            - net_mariadb
+            - net_service
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin_mariadb
+        container_name: phpmyadmin
         restart: always
         environment:
-            - PMA_HOST=mariadb
+            - PMA_HOST=mysql
             - PMA_USER=root
             - PMA_PASSWORD=root
             - UPLOAD_LIMIT=4048M
             - UPLOAD_MAX_FILESIZE=512M
             - MAX_EXECUTION_TIME=38000
         ports:
-            - 8080:80
+            - 8081:80
         networks:
-            - net_mariadb
+            - net_service

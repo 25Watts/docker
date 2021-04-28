@@ -1,8 +1,8 @@
 FROM php:5.6-apache
 
-LABEL "AUTHOR" Alberto Urbaez <albertourbaez20@gmail.com>
-MAINTAINER Alberto Urbaez <albertourbaez20@gmail.com>
-
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
+LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 # INSTALL SYSTEM DEPENDENCIES
 # -----------------------------
 RUN apt-get update \

@@ -1,11 +1,10 @@
 version: '3.8'
 
 networks:
-    net_nodejs:
-        name: NetNodejs
-        ipam:
-            config:
-                - subnet: 172.30.0.0/16
+    net_service:
+        external:
+            name: net_service
+
 services:
     nodejs:
         image: nodejs
@@ -20,10 +19,9 @@ services:
             # - MONGO_DB=example
         volumes:
             - .:/home/node/app
-            - node_modules:/home/node/app/node_modules
+            #- node_modules:/home/node/app/node_modules
         networks:
-            net_nodejs:
-                ipv4_address: 172.30.30.1
+            - net_service
         command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon app.js
 
 

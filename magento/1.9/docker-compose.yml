@@ -1,16 +1,16 @@
 version: '3.8'
 
 networks:
-    net_mysql:
+    net_service:
         external:
-            name: NetMysql
+            name: net_service
 
 services:
     apache:
-        image: 25watts/magento1:latest
+        image: 25watts/magento:1.9
         ports:
             - 85:80 # web
         volumes:
             - .:/var/www/html
         networks:
-            - net_mysql
+            - net_service

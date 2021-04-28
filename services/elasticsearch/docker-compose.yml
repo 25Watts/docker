@@ -1,8 +1,13 @@
 version: '3.7'
 
 networks:
-    net_elasticsearch:
-        name: NetElasticsearch
+    net_service:
+        name: net_service
+        driver: bridge
+
+volumes:
+  elasticsearch-data:
+    driver: local
 
 services:
   elasticsearch:
@@ -23,7 +28,7 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     networks:
-      - net_elasticsearch
+      - net_service
     ports:
       - 9200:9200
       - 9300:9300
@@ -36,10 +41,6 @@ services:
     ports:
       - 5601:5601
     networks:
-      - net_elasticsearch
+      - net_service
     depends_on:
       - elasticsearch
-
-volumes:
-  elasticsearch-data:
-    driver: local

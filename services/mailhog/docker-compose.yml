@@ -1,8 +1,10 @@
 version: '3.8'
 
 networks:
-    net_mail:
-        name: NetMailHog
+    net_service:
+        name: net_service
+        driver: bridge
+
 services:
     mailhog:
         image: mailhog/mailhog
@@ -12,4 +14,4 @@ services:
             - 1025:1025
             - 8025:8025
         networks:
-            - net_mail
+            - net_service

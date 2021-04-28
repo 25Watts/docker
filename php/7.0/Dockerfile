@@ -1,5 +1,6 @@
 FROM php:7.0-apache
 
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 
 # INSTALL SYSTEM DEPENDENCIES
@@ -51,11 +52,6 @@ RUN docker-php-ext-configure \
   #dev
 
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-
-# INSTALL COMPOSER
-# -----------------------------
-RUN curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/bin --filename=composer --version=1.10.16 && chmod +x /usr/bin/composer 
 
 # INSTALL XDEBUG
 # -----------------------------

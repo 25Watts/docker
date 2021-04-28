@@ -1,12 +1,10 @@
 version: '3.8'
 
 networks:
-    net_postgres:
-        name: NetPostgres
+    net_service:
+        name: net_service
         driver: bridge
-        ipam:
-            config:
-                - subnet: 172.60.60.0/16
+
 volumes:
     dbdata:
         driver: local
@@ -21,5 +19,4 @@ services:
         volumes:
             - dbdata:/var/lib/oracle
         networks:
-            net_postgres:
-                ipv4_address: 172.60.62.1
+            - net_service
