@@ -1,15 +1,10 @@
 version: '3.8'
 
 networks:
-    net_mysql:
+    net_service:
         external:
-            name: NetMysql
-    net_redis:
-        external:
-            name: NetRedis
-    net_mail:
-        external:
-            name: NetMailHog
+            name: net_service
+
 services:
     apache:
         image: 25watts/magento:2.3
@@ -21,6 +16,4 @@ services:
             - ~/.composer:/var/www/.composer
             - ~/.npm:/var/www/.npm
         networks:
-            - net_mysql
-            - net_redis
-            # - net_mail
+            - net_service

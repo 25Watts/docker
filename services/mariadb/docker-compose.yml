@@ -1,9 +1,10 @@
 version: '3.8'
 
 networks:
-    net_mariadb:
-        name: NetMariaDB
-        # driver: bridge
+    net_service:
+        name: net_service
+        driver: bridge
+
 volumes:
     mariadb_data:
         driver: local
@@ -20,7 +21,7 @@ services:
         volumes:
             - mariadb_data:/var/lib/mariadb
         networks:
-            - net_mariadb
+            - net_service
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -36,4 +37,4 @@ services:
         ports:
             - 8080:80
         networks:
-            - net_mariadb
+            - net_service

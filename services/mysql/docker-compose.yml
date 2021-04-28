@@ -1,12 +1,14 @@
 version: '3.8'
 
 networks:
-    net_mysql:
-        name: NetMysql
-        # driver: bridge
+    net_service:
+        name: net_service
+        driver: bridge
+
 volumes:
     mysql_data:
         driver: local
+
 services:
     mysql:
         image: mysql:5.7
@@ -19,7 +21,7 @@ services:
         volumes:
             - mysql_data:/var/lib/mysql
         networks:
-            - net_mysql
+            - net_service
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -35,4 +37,4 @@ services:
         ports:
             - 8081:80
         networks:
-            - net_mysql
+            - net_service

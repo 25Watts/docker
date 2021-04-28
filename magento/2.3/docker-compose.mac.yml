@@ -1,9 +1,9 @@
 version: '3.8'
 
 networks:
-    net_mysql:
+    net_service:
         external:
-            name: NetMysql
+            name: net_service
     net_redis:
         external:
             name: NetRedis
@@ -19,7 +19,7 @@ services:
         volumes:
             - apache-sync-jmc:/var/www/html:nocopy,delegated
         networks:
-            - net_mysql
+            - net_service
             - net_redis
             - net_mail
 

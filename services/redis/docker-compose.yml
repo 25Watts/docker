@@ -1,8 +1,9 @@
 version: '3.8'
 
 networks:
-    net_redis:
-        name: NetRedis
+    net_service:
+        name: net_service
+        driver: bridge
 
 services:
     redis_cache:
@@ -12,7 +13,7 @@ services:
         ports:
             - 6379
         networks:
-            - net_redis
+            - net_service
 
     redis_session:
         image: redis
@@ -21,4 +22,4 @@ services:
         ports:
             - 6379
         networks:
-            - net_redis
+            - net_service

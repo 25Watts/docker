@@ -1,9 +1,9 @@
 version: '3.8'
 
 networks:
-    net_mysql:
+    net_service:
         external:
-            name: NetMysql
+            name: net_service
 
 services:
     apache:
@@ -13,4 +13,4 @@ services:
         volumes:
             - .:/var/www/html
         networks:
-            - net_mysql
+            - net_service

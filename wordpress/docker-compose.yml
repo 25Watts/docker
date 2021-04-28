@@ -1,9 +1,10 @@
 version: '3.8'
 
 networks:
-    net_mariadb:
+    net_service:
         external:
-            name: NetMariaDB
+            name: net_service
+
 services:
     apache:
         image: 25watts/wordpress
@@ -17,4 +18,4 @@ services:
             # XDEBUG_CONFIG: client_host=172.20.0.1 client_port=9003 remote_enable=1 profiler_enable=1
             # PHP_IDE_CONFIG: "serverName=Docker"
         networks:
-            - net_mariadb
+            - net_service

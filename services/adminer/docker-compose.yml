@@ -1,0 +1,15 @@
+version: '3.8'
+
+networks:
+    net_service:
+        name: net_service
+        driver: bridge
+
+services:
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8082:8080
+        networks:
+            - net_service
