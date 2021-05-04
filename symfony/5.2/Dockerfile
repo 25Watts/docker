@@ -36,10 +36,9 @@ RUN ln -s /etc/apache2/sites-available/local.lan.conf /etc/apache2/sites-enabled
     && a2ensite local.lan.conf \
     && a2dissite 000-default.conf
 
-COPY .docker/bin/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+COPY .docker/bin/* /usr/local/bin/
+# RUN chmod +x /entrypoint.sh
+# ENTRYPOINT ["/entrypoint.sh"]
 
 RUN chmod +x /usr/local/bin/*
 RUN chmod 777 -Rf /var/www /var/www/.* \

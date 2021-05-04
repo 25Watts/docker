@@ -14,7 +14,7 @@ return array(
             'redis' =>
                 array(
 
-                    'host' => 'redis-session',
+                    'host' => 'redis_session',
                     'port' => '6379',
                     'password' => '',
                     'timeout' => '2.5',
@@ -41,8 +41,8 @@ return array(
                 array(
                     'default' =>
                         array(
-                            'host' => 'db',
-                            'dbname' => 'magento',
+                            'host' => 'mariadb',
+                            'dbname' => 'magento2',
                             'username' => 'root',
                             'password' => 'root',
                             'active' => '1',
@@ -88,7 +88,7 @@ return array(
                             'backend' => 'Cm_Cache_Backend_Redis',
                             'backend_options' =>
                                 array(
-                                    'server' => 'redis',
+                                    'server' => 'redis_cache',
                                     'port' => '6379',
                                     'persistent' => '',
                                     'database' => '0',
@@ -109,7 +109,7 @@ return array(
                             'backend' => 'Cm_Cache_Backend_Redis',
                             'backend_options' =>
                                 array(
-                                    'server' => 'redis',
+                                    'server' => 'redis_cache',
                                     'port' => '6379',
                                     'persistent' => '',
                                     'database' => '1',

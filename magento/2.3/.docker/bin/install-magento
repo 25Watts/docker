@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+cp /var/www/auth.json /var/www/.composer/auth.json \
+&& composer install;
+
+echo 'Creación de Usuario'
+php -f ./bin/magento admin:user:create;
+
+echo 'Ingrese la url, Ejemplo "http://localhost:85/"'
+read project_url
+
+# && php -f ./bin/magento admin:user:create --admin-user=USUARIO --admin-password=CONTRASEÑA --admin-firstname=NOMBRE --admin-lastname=APELLIDO --admin-email=EMAIL \
+# php -f ./bin/magento config:set --lock-env web/unsecure/base_url "$project_url" \
+# && php -f ./bin/magento config:set --lock-env web/secure/base_url "$project_url" \
+php -f ./bin/magento setup:store-config:set --base-url="$project_url" \
+&& php -f ./bin/magento setup:store-config:set --base-url-secure="$project_url"\
+&& php -f ./bin/magento setup:upgrade \
+&& php -f ./bin/magento setup:di:compile \
+&& php -f ./bin/magento setup:static-content:deploy en_US es_AR -f \
+&& php -f ./bin/magento cache:flush;
+
+mv package.json.sample package.json ; mv Gruntfile.js.sample Gruntfile.js;
+npm i;
+php -f ./bin/magento deploy:mode:set developer \
+&& composer dump-autoload -o \
+&& clear && echo "
+===================== 🚀 Done 🚀 ===================
+
+      Magento 2 Installed successfully!
+
+      🌎 Admin: $project_url
+      👤 User: admin
+      🔑 Password: admin123
+
+===================== 🚀 Done 🚀 ==================="

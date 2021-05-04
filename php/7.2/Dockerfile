@@ -20,6 +20,7 @@ RUN apt-get update \
     git \
     nano \
     wget \
+    dom \
     lynx \
     psmisc \
     libssl-dev \

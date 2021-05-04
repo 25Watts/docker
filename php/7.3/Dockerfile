@@ -33,6 +33,7 @@ RUN apt-get update \
   	unzip \
   	tar \
   	cron \
+    dom \
   	bash-completion \
     && apt-get clean
 
