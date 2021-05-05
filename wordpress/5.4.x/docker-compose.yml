@@ -7,7 +7,7 @@ networks:
 
 services:
     apache:
-        image: 25watts/wordpress
+        image: 25watts/wordpress:5.4
         ports:
             - 85:80
         volumes:
