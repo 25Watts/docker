@@ -25,6 +25,7 @@ RUN apt-get update \
   	gnupg \
   	redis-tools \
   	curl \
+	git \
   	unzip \
   	tar \
   	cron \
