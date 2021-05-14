@@ -1,11 +1,12 @@
-FROM betox/php:7.4
+FROM 25watts/php:7.1
 
+LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 
 # SET DEFAULT ENVIRONMENT
 # -----------------------------
-ENV COMPOSER_VERSION="2.0.11" \
-    NODE_VERSION="setup_14.x"
+ENV COMPOSER_VERSION="1.10.16" \
+    NODE_VERSION="setup_10.x"
 
 # INSTALL NODE, NVM, NPM AND GRUNT
 # -----------------------------
@@ -32,13 +33,7 @@ ADD .docker/config/php.ini /usr/local/etc/php/php.ini
 ADD .docker/config/XDebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 ADD .docker/config/local.lan.conf /etc/apache2/sites-available/local.lan.conf
-RUN ln -s /etc/apache2/sites-available/local.lan.conf /etc/apache2/sites-enabled/local.lan.conf \
-    && a2ensite local.lan.conf \
-    && a2dissite 000-default.conf
-
-COPY .docker/bin/* /usr/local/bin/
-# RUN chmod +x /entrypoint.sh
-# ENTRYPOINT ["/entrypoint.sh"]
+RUN ln -s /etc/apache2/sites-available/local.lan.conf /etc/apache2/sites-enabled/local.lan.conf
 
 RUN chmod +x /usr/local/bin/*
 RUN chmod 777 -Rf /var/www /var/www/.* \
@@ -46,6 +41,9 @@ RUN chmod 777 -Rf /var/www /var/www/.* \
 	&& usermod -u 1000 www-data \
 	&& chsh -s /bin/bash www-data\
 	&& a2enmod rewrite \
-	&& a2enmod headers
-
-#CMD ["apache2-foreground"]
+	&& a2enmod headers \
+  && a2ensite local.lan.conf \
+  && a2dissite 000-default.conf
+  
+VOLUME /var/www/html
+WORKDIR /var/www/html

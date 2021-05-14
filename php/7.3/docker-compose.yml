@@ -13,8 +13,8 @@ services:
             - .:/var/www/html
             - ~/.composer:/var/www/.composer
             - ~/.npm:/var/www/.npm
-        # environment:
-            # XDEBUG_CONFIG: client_host=172.20.0.1 client_port=9003 remote_enable=1 profiler_enable=1
-            # PHP_IDE_CONFIG: "serverName=Docker"
+        environment:
+            # XDEBUG_CONFIG: client_port=9003 client_host=172.17.0.1
+            PHP_IDE_CONFIG: "serverName=Docker"
         networks:
             - net_service
