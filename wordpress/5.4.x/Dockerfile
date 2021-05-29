@@ -1,4 +1,4 @@
-FROM 25watts/php:7.1
+FROM 25watts/php:7.4
 
 LABEL "ORGANIZATION" 25WATTS <dev@25watts.com.ar>
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
@@ -6,7 +6,7 @@ LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 # SET DEFAULT ENVIRONMENT
 # -----------------------------
 ENV COMPOSER_VERSION="1.10.16" \
-    NODE_VERSION="setup_10.x"
+    NODE_VERSION="setup_12.x"
 
 # INSTALL NODE, NVM, NPM AND GRUNT
 # -----------------------------

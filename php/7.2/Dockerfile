@@ -50,6 +50,7 @@ RUN docker-php-ext-configure \
     sockets \
     bcmath \
     zip \
+    xml \
     soap
 
 RUN apt-get update -y && \
@@ -68,8 +69,8 @@ RUN apt-get update \
 
 # INSTALL XDEBUG
 # -----------------------------
-RUN pecl install -f xdebug \
-&& echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;
+RUN pecl install -f xdebug-3.0.3
+RUN docker-php-ext-enable xdebug
 
 # CONFIGURING SYSTEM
 # -----------------------------
