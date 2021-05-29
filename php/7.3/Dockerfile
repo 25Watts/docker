@@ -25,7 +25,6 @@ RUN apt-get update \
     psmisc \
     libssl-dev \
   	libedit2 \
-  	libxslt1-dev \
   	apt-utils \
   	gnupg \
   	redis-tools \

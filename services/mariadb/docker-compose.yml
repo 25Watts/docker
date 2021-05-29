@@ -16,6 +16,7 @@ services:
         container_name: mariadb
         ports:
             - 3306:3306
+        command: [--max-allowed-packet=2G]
         environment:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
