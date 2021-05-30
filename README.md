@@ -230,7 +230,7 @@ xdebug.client_host = 10.254.254.254
 ...
 services:
     apache:
-		...
-		volumes: 
-			- .docker/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    ...
+        volumes: 
+            - .docker/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 ```
