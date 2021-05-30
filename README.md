@@ -195,3 +195,42 @@ Buscar la ip de la red docker
 	]
 
 [link-dockerhub]: https://hub.docker.com/repository/docker/25watts/php
+
+## Configurar Xdebug 3.0.3 MacOs
+
+### 1 - Configurar Host address alias
+
+Download the plist into the correct location
+```sh
+$ sudo curl -o \
+        /Library/LaunchDaemons/org.devilbox.docker_10254_alias.plist \
+        https://raw.githubusercontent.com/devilbox/xdebug/master/osx/org.devilbox.docker_10254_alias.plist
+```
+
+Enable without reboot
+```sh
+$ sudo launchctl load /Library/LaunchDaemons/org.devilbox.docker_10254_alias.plist
+```
+
+De esta forma configuramos la IP 10.254.254.254 para que sea compartida.
+
+### 2 - Configurar xdebug.client_host en xdebug.ini
+Luego debemos ingresar al archivo xdebug.ini y configurar xdebug.client_host con el ip anterior
+
+```sh
+xdebug.client_host = 10.254.254.254
+```
+
+### 3 - agregar configuración a docker
+1- Primero creamos una carpeta .docker/ en nuestro proyecto, en caso de que no exista
+2- Creamos el archivo xdebug.ini y copiamos el contenido del archivo original de xdebug ubicado en el repo, y luego cambiamos O agregamos xdebug.client_host = 10.254.254.254
+3- Finalmente en nuestro docker-compose.yml dentro del servicio de apache, en volumes vamos declar la siguiente línea para que cargue nuestro archivo en lugar del generado por defecto
+
+```sh
+...
+services:
+    apache:
+		...
+		volumes: 
+			- .docker/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+```
