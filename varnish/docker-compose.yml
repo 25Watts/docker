@@ -1,0 +1,16 @@
+version: '3.7'
+
+networks:
+    net_varnish:
+        name: NetVarnish
+
+services:
+  varnish:
+    image: varnish:6.6
+    container_name: varnish
+    volumes:
+      - ./default.vcl:/etc/varnish/default.vcl:ro
+    networks:
+      - net_varnish
+    ports:
+      - 8062:80

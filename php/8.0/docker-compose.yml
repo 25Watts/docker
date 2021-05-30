@@ -1,0 +1,20 @@
+version: '3.8'
+
+networks:
+    net_service:
+        external:
+            name: net_service
+services:
+    apache:
+        image: betox/php:8.0
+        ports:
+            - 85:80
+        volumes:
+            - .:/var/www/html
+            - ~/.composer:/var/www/.composer
+            - ~/.npm:/var/www/.npm
+        environment:
+            # XDEBUG_CONFIG: client_host=172.20.0.1 client_port=9003 remote_enable=1 profiler_enable=1
+            # PHP_IDE_CONFIG: "serverName=Docker"
+        networks:
+            - net_service

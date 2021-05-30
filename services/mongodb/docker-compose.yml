@@ -1,0 +1,24 @@
+version: '3.8'
+
+networks:
+    net_service:
+        name: net_service
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local
+        node_modules:
+
+services:
+    mongodb:
+        image: mongo:4.1.8-xenial
+        container_name: mongodb
+        restart: unless-stopped
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - dbdata:/data/mongodb
+        networks:
+            - net_service

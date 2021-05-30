@@ -1,0 +1,21 @@
+version: '3.8'
+
+networks:
+    net_service:
+        external:
+            name: net_service
+
+volumes:
+    apache-sync-jmc:
+        external: true
+
+services:
+    apache:
+        image: 25watts/magento:2.4
+        ports:
+            - 85:80
+            - 443:443
+        volumes:
+            - apache-sync-jmc:/var/www/html:nocopy,delegated
+        networks:
+            - net_service

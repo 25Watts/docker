@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+composer install -n \
+&& npm i \
+&& npm run dev \
+&& composer dump-autoload -o \
+&& composer dump-env dev \
+&& clear && echo "
+===================== 🚀 25watts 🚀 ===================
+
+            Symfony Installed successfully!
+
+===================== 🚀 25watts 🚀 ==================="

@@ -1,0 +1,17 @@
+version: '3.8'
+
+networks:
+    net_service:
+        external:
+            name: net_service
+services:
+    apache:
+        image: 25watts/php:5.6
+        ports:
+            - 85:80
+        volumes:
+            - .:/var/www/html
+            - ~/.composer:/var/www/.composer
+            - ~/.npm:/var/www/.npm
+        networks:
+            - net_service

@@ -1,0 +1,22 @@
+version: '3.8'
+
+networks:
+    net_service:
+        name: net_service
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local
+
+services:
+    postgres:
+        image: postgres
+        restart: always
+        container_name: postgres
+        environment:
+            POSTGRES_PASSWORD: example
+        volumes:
+            - dbdata:/var/lib/oracle
+        networks:
+            - net_service

@@ -1,0 +1,47 @@
+version: '3.8'
+
+networks:
+    net_service:
+        name: net_service
+
+volumes:
+    redis-data:
+
+services:
+    redis_cache:
+        image: redis:latest
+        restart: always
+        container_name: redis_cache
+        command: ["redis-server", "--appendonly", "yes"]
+        volumes:
+            - redis-data:/data
+        ports:
+            - 6300:6379
+        networks:
+            - net_service
+
+    redis_session:
+        image: redis:latest
+        restart: always
+        container_name: redis_session
+        command: ["redis-server", "--appendonly", "yes"]
+        volumes:
+            - redis-data:/data
+        ports:
+            - 6301:6379
+        networks:
+            - net_service
+    
+    redis-commander:
+        image: rediscommander/redis-commander:latest
+        environment:
+            - REDIS_HOSTS=local:redis_session:6379,local:redis_cache:6379
+            - HTTP_USER=root
+            - HTTP_PASSWORD=root
+        ports:
+            - 8081:8081
+        depends_on:
+            - redis_session
+            - redis_cache
+        networks:
+            - net_service

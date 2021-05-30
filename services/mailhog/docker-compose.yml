@@ -1,0 +1,17 @@
+version: '3.8'
+
+networks:
+    net_service:
+        name: net_service
+        driver: bridge
+
+services:
+    mailhog:
+        image: mailhog/mailhog
+        container_name: mailhog
+        restart: always
+        ports:
+            - 1025:1025
+            - 8025:8025
+        networks:
+            - net_service
