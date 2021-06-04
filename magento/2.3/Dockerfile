@@ -36,9 +36,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 # INSTALL MHSENDMAIL
 # -----------------------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install golang-go \
-   && mkdir /opt/go \
-   && export GOPATH=/opt/go \
-   && go get github.com/mailhog/mhsendmail
+    && mkdir /opt/go \
+    && export GOPATH=/opt/go \
+    && go get github.com/mailhog/mhsendmail
 
 # INSTALL MAGERUN 2
 # -----------------------------
