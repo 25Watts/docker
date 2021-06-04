@@ -1,34 +1,52 @@
 #!/usr/bin/env bash
+echo 'INSTALACION Y CONFIGURACION COMPOSER'
+echo '======================================================'
 cp /var/www/auth.json /var/www/.composer/auth.json \
 && composer install;
 
-echo 'Creación de Usuario'
-php -f ./bin/magento admin:user:create;
-
-echo 'Ingrese la url, Ejemplo "http://localhost:85/"'
-read project_url
-
-# && php -f ./bin/magento admin:user:create --admin-user=USUARIO --admin-password=CONTRASEÑA --admin-firstname=NOMBRE --admin-lastname=APELLIDO --admin-email=EMAIL \
-# php -f ./bin/magento config:set --lock-env web/unsecure/base_url "$project_url" \
-# && php -f ./bin/magento config:set --lock-env web/secure/base_url "$project_url" \
-php -f ./bin/magento setup:store-config:set --base-url="$project_url" \
-&& php -f ./bin/magento setup:store-config:set --base-url-secure="$project_url"\
-&& php -f ./bin/magento setup:upgrade \
+echo 'CONFIGURACION DE MAGENTO'
+echo '======================================================'
+php -f ./bin/magento setup:upgrade \
 && php -f ./bin/magento setup:di:compile \
-&& php -f ./bin/magento setup:static-content:deploy en_US es_AR -f \
-&& php -f ./bin/magento cache:flush;
+&& php -f ./bin/magento setup:static-content:deploy en_US es_AR -f;
 
+echo 'INGRESE EL PUERTO DEL AMBIENTE LOCAL, Ejemplo "85"'
+echo '======================================================'
+read port
+php -f ./bin/magento setup:store-config:set --base-url="http://localhost:"$port"/" \
+&& php -f ./bin/magento setup:store-config:set --base-url-secure="https://localhost:"$port"/" \
+&& php -f ./bin/magento config:set --lock-env web/unsecure/base_url "http://localhost:"$port"/" \
+&& php -f ./bin/magento config:set --lock-env web/secure/base_url "https://localhost:"$port"/";
+php -f ./bin/magento cache:flush;
+
+echo 'SETEO DE MODO DEVELOP'
+echo '======================================================'
+php -f ./bin/magento deploy:mode:set developer;
+
+echo 'CREACIÓN DE USUARIO DE ADMIN MAGENTO'
+echo '======================================================'
+php -f ./bin/magento admin:user:create;
+read pass
+read user
+read name
+read last_name
+read email
+php -f ./bin/magento admin:user:create --admin-user=$user --admin-password=$pass --admin-firstname=$name --admin-lastname=$last_name --admin-email=$email;
+
+
+echo 'INSTALACION Y CONFIGURACION NPM'
+echo '======================================================'
 mv package.json.sample package.json ; mv Gruntfile.js.sample Gruntfile.js;
 npm i;
-php -f ./bin/magento deploy:mode:set developer \
-&& composer dump-autoload -o \
+
+composer dump-autoload -o \
 && clear && echo "
-===================== 🚀 Done 🚀 ===================
+===================== 🚀 25WATTS 🚀 ===================
 
       Magento 2 Installed successfully!
 
-      🌎 Admin: $project_url
-      👤 User: admin
-      🔑 Password: admin123
+      🌎 Admin: http://localhost:$port
+      👤 User: $user
+      🔑 Password: $pass
 
-===================== 🚀 Done 🚀 ==================="
+===================== 🚀 25WATTS 🚀 ==================="

@@ -12,7 +12,7 @@ services:
             - 86:80
             - 443:443
         volumes:
-            - .:/var/www/html:cached
+            - .:/var/www/html
             - ~/.composer:/var/www/.composer
             - ~/.npm:/var/www/.npm
         networks:

@@ -39,7 +39,7 @@ services:
             - HTTP_USER=root
             - HTTP_PASSWORD=root
         ports:
-            - 8081:8081
+            - 8085:8081
         depends_on:
             - redis_session
             - redis_cache

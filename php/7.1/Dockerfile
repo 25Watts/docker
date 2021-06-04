@@ -60,14 +60,13 @@ RUN apt-get update \
     && apt-get install -y \
     libpcre3 \
     libpcre3-dev \
-  # php-pear \
     && pecl install oauth \
     && echo "extension=oauth.so" > /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini
 
 # INSTALL XDEBUG
 # -----------------------------
-RUN pecl install -f xdebug-3.0.3
-RUN docker-php-ext-enable xdebug
+#RUN pecl install -f xdebug-3.0.3
+#RUN docker-php-ext-enable xdebug
 
 # CONFIGURING SYSTEM
 # -----------------------------
