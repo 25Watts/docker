@@ -7,7 +7,7 @@ networks:
 
 services:
     apache:
-        image: betox/symfony:5.x
+        image: 25watts/symfony:5.x
         ports:
             - 85:80
         volumes:

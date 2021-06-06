@@ -1,4 +1,4 @@
-FROM betox/php:7.4
+FROM 25watts/php:7.4
 
 LABEL "AUTHOR" Alberto Urbaez <alberto.urbaez@25watts.com.ar>
 
