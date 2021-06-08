@@ -1,0 +1,16 @@
+version: '3.8'
+
+networks:
+    net_service:
+        external:
+            name: net_service
+
+services:
+    apache:
+        image: 25watts/symfony:5.x-oracle
+        ports:
+            - 85:80
+        volumes:
+            - .:/var/www/html
+        networks:
+            - net_service
