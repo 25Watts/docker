@@ -6,9 +6,8 @@ networks:
         driver: bridge
 
 volumes:
-    dbdata:
+    mongodb_data:
         driver: local
-        node_modules:
 
 services:
     mongodb:
@@ -19,6 +18,6 @@ services:
             - MONGO_INITDB_ROOT_USERNAME=root
             - MONGO_INITDB_ROOT_PASSWORD=root
         volumes:
-            - dbdata:/data/mongodb
+            - mongodb_data:/data/mongodb
         networks:
             - net_service

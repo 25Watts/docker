@@ -6,17 +6,17 @@ networks:
         driver: bridge
 
 volumes:
-    dbdata:
+    oracle_data:
         driver: local
 
 services:
     oracle:
-        image: tqldtqmapirails/oracle-xe-12c:latest
+        image: store/oracle/database-enterprise:12.2.0.1
         container_name: oracle
         ports:
             - 1521:1521
             - 5500:5500
         volumes:
-            - dbdata:/var/lib/oracle
+            - oracle_data:/var/lib/oracle
         networks:
             - net_service
