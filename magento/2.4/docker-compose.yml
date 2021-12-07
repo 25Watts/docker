@@ -5,9 +5,10 @@ networks:
         external:
             name: net_service
 
-volumes:
-    apache-sync-jmc:
-        external: true
+# Solo usar con mutagen y mac
+# volumes:
+#     apache-sync-jmc:
+#         external: true
 
 services:
     apache:
@@ -16,6 +17,7 @@ services:
             - 85:80
             - 443:443
         volumes:
-            - apache-sync-jmc:/var/www/html:nocopy,delegated
+            # - apache-sync-jmc:/var/www/html:nocopy,delegated
+            - .:/var/www/html
         networks:
             - net_service

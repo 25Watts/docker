@@ -12,6 +12,5 @@ services:
             - 85:80 # web
         volumes:
             - .:/var/www/html
-            - ~/.composer:/var/www/.composer
         networks:
             - net_service
