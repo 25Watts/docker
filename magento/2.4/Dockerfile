@@ -50,7 +50,16 @@ ADD .docker/config/php.ini /usr/local/etc/php/php.ini
 ADD .docker/config/magento.conf /etc/apache2/sites-available/magento.conf
 COPY .docker/bin/* /usr/local/bin/
 COPY .docker/users/* /var/www/
-RUN chmod +x /usr/local/bin/*
-RUN ln -s /etc/apache2/sites-available/magento.conf /etc/apache2/sites-enabled/magento.conf
 
-USER www-data
+RUN ln -s /etc/apache2/sites-available/magento.conf /etc/apache2/sites-enabled/magento.conf
+RUN chmod +x /usr/local/bin/*
+
+RUN chown -R www-data:www-data /var/www
+# RUN find /var/www -type f -exec chmod 664 {} \;
+# RUN find /var/www -type d -exec chmod 775 {} \;
+
+RUN usermod -u 1000 www-data \
+	&& chsh -s /bin/bash www-data
+
+VOLUME /var/www/html
+WORKDIR /var/www/html
