@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+echo "
+-------DOCKER MAGENTO2.x-------
+v.2.0
+-------------------------------
+
+======== OPCION MENU ========
+    1. - Create Docker
+    2. - Start Docker
+    3. - Stop Docker
+    4. - Shell Docker
+    5. - Kill Docker
+    6. - Redis
+    7. - Delete All Dockers
+======== OPCION MENU ========
+"
+
+echo '¿Indica el numero del comando a ejecutar?'
+read code_opcion
+
+if [ $code_opcion == 1 ]; then # Create Docker
+    bash ./.docker/bash/init
+elif [ $code_opcion == 2 ]; then # Start Docker
+    bash ./.docker/bash/start
+elif [ $code_opcion == 3 ]; then # Stop Docker
+    docker-compose stop
+elif [ $code_opcion == 4 ]; then # Shell Docker
+    docker-compose exec --user www-data apache bash
+elif [ $code_opcion == 5 ]; then # Kill Docker
+    docker-compose stop
+    docker-compose down -v
+elif [ $code_opcion == 6 ]; then # Redis 
+    redis-cli -h redis-session flushall
+    redis-cli -h redis flushall
+elif [ $code_opcion == 7 ]; then # Redis 
+    # echo 'Esta accion realizar las siguiente acciones: Eliminacion de los contenedores detenidos y todas las imágenes no utilizadas (no solo las imágenes colgantes)'
+    # echo '¿Esta seguro que desea realizar la eliminacion masiva de Docker?'
+    # read delete_confir
+    docker system prune -a
+else
+    echo "no ingreso en la opcion = "$code_opcion
+fi
+# echo "fin"
